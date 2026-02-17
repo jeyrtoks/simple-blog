@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signUpNewUser } from "../services/Auth";
 
 const Signup = () => {
@@ -7,20 +7,30 @@ const Signup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [retypepassword, setretypePassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault;
+    e.preventDefault();
     setLoading(true);
 
+    let validationError = "";
     if (!username) {
-      setError("Please add a username!");
+      validationError = "Please add a username!";
     } else if (!email) {
-      setError("Please add an email!");
+      validationError = "Please add an email!";
     } else if (!password) {
-      setError("Please add a password!");
+      validationError = "Please add a password!";
+    } else if (password != retypepassword) {
+      validationError = "Password do not match!";
+    }
+
+    if (validationError) {
+      setError(validationError);
+      setLoading(false);
+      return;
     }
 
     try {
@@ -38,7 +48,7 @@ const Signup = () => {
 
   return (
     <>
-      <Form className="card">
+      <form className="card" method="POST">
         <h2 style={{ textAlign: "center" }}>Create an Account</h2>
         <input
           onChange={(e) => {
@@ -64,6 +74,14 @@ const Signup = () => {
           type="password"
           placeholder="Password..."
         />
+        <input
+          onChange={(e) => {
+            setretypePassword(e.target.value);
+          }}
+          name="retypepassword"
+          type="password"
+          placeholder="Retype Password..."
+        />
         <div>
           {error && (
             <p
@@ -81,7 +99,7 @@ const Signup = () => {
         <button onClick={handleSignUp} disabled={loading}>
           {loading ? "Signing Up..." : "Sign Up"}
         </button>
-      </Form>
+      </form>
       <p>
         Already have an account? <Link to="/signin">Sign in!</Link>
       </p>
