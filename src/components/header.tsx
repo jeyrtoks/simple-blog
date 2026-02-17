@@ -8,6 +8,7 @@ const header = () => {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
+        borderBottom: "1px solid #5e5e5e",
       }}
     >
       <p>Simple Blog!</p>
