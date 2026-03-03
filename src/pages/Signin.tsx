@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Form, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signInUser } from "../services/Auth";
-import { supabase } from "../supabaseClient";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
@@ -77,8 +76,6 @@ const Signin = () => {
       </div>
       <p>
         Dont have an account? <Link to="/signup">Sign up!</Link>
-        <br />
-        Or go back to <Link to="/">Home</Link>
       </p>
     </>
   );

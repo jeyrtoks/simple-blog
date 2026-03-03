@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import "../App.css";
 
-const header = () => {
+type HeaderProps = {
+  user?: string | null;
+};
+
+const Header = ({ user }: HeaderProps) => {
   return (
     <div
       style={{
@@ -13,13 +17,15 @@ const header = () => {
     >
       <p>Simple Blog!</p>
       <h2>Hello, Welcome to My Blog!</h2>
-      <Link to="/signup">
-        <button title="Create post" style={{}}>
-          Create
-        </button>
-      </Link>
+      {user ? (
+        <button title="Create post">Create</button>
+      ) : (
+        <Link to="/signin">
+          <button title="Signin">Login</button>
+        </Link>
+      )}
     </div>
   );
 };
 
-export default header;
+export default Header;
