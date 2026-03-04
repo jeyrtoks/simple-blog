@@ -1,9 +1,18 @@
 import { supabase } from "../supabaseClient";
 
-export const signUpNewUser = async (email: string, password: string) => {
+export const signUpNewUser = async (
+  username: string,
+  email: string,
+  password: string,
+) => {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
+    options: {
+      data: {
+        username: username,
+      },
+    },
   });
 
   if (error) {
@@ -37,7 +46,7 @@ export const signOutUser = async () => {
 export const getUser = async () => {
   const { data } = await supabase.auth.getUser();
   if (data.user) {
-    return data.user.email;
+    return data.user.user_metadata.username;
   }
   console.log("no user fetched");
   return;

@@ -63,6 +63,7 @@ const Signin = () => {
                 fontSize: "0.875rem",
                 lineHeight: "1.25rem",
                 color: "#ef4444",
+                textAlign: "center",
               }}
             >
               {error}
