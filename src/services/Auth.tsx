@@ -1,3 +1,4 @@
+import type { Session } from "@supabase/supabase-js";
 import { supabase } from "../supabaseClient";
 
 export const signUpNewUser = async (
@@ -45,9 +46,20 @@ export const signOutUser = async () => {
 
 export const getUser = async () => {
   const { data } = await supabase.auth.getUser();
-  if (data.user) {
-    return data.user.user_metadata.username;
+  if (data.user && data.user.email) {
+    return {
+      email: data.user.email,
+      username: data.user.user_metadata.username,
+    };
   }
   console.log("no user fetched");
   return;
+};
+
+export const authListener = (callback: (session: Session | null) => void) => {
+  const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+    callback(session);
+  });
+
+  return data.subscription;
 };
