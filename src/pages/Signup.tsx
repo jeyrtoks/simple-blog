@@ -34,9 +34,13 @@ const Signup = () => {
     }
 
     try {
-      const result = await signUpNewUser(email, password);
-      if (result.success) {
-        navigate("/");
+      const { success, error } = await signUpNewUser(username, email, password);
+      if (success) {
+        navigate("/signin");
+      }
+
+      if (error) {
+        setError(error.message);
       }
     } catch (err) {
       console.log("Error signing up:", err);
@@ -89,6 +93,7 @@ const Signup = () => {
                 fontSize: "0.875rem",
                 lineHeight: "1.25rem",
                 color: "#ef4444",
+                textAlign: "center",
               }}
             >
               {error}
